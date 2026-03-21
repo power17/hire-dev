@@ -6,6 +6,7 @@ import com.power.pojo.Stu;
 import com.power.service.StuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -20,10 +21,7 @@ public class StuServiceImpl  implements StuService {
     @Autowired
     private StuMapper stuMapper;
 
-    public StuServiceImpl(StuMapper stuMapper) {
-        this.stuMapper = stuMapper;
-    }
-
+    @Transactional
     @Override
     public void save(Stu stu) {
         stuMapper.insert(stu);
