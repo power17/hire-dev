@@ -8,6 +8,8 @@ spring:
     active: dev
   banner:
         location: classpath:banner/banner.txt
+  application:
+    name: user-service
 #    image:
 #      location: classpath:banner/img.pngba
 

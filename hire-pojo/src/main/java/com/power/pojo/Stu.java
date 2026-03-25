@@ -6,6 +6,7 @@ package com.power.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -17,7 +18,7 @@ import java.io.Serializable;
  * @author power
  * @since 2026-03-21
  */
-
+@Data
 public class Stu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,36 +31,36 @@ public class Stu implements Serializable {
     private Integer age;
 
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "Stu{" +
-        "id=" + id +
-        ", name=" + name +
-        ", age=" + age +
-        "}";
-    }
+//    public String getId() {
+//        return id;
+//    }
+//
+//    public void setId(String id) {
+//        this.id = id;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public Integer getAge() {
+//        return age;
+//    }
+//
+//    public void setAge(Integer age) {
+//        this.age = age;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "Stu{" +
+//        "id=" + id +
+//        ", name=" + name +
+//        ", age=" + age +
+//        "}";
+//    }
 }

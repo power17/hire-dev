@@ -6,3 +6,12 @@ server:
 spring:
   profiles:
     active: dev
+  application:
+    name: company-service
+  banner:
+      location: classpath:banner/banner.txt
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  global-config:
+    db-config:
+      id-type: assign_id # 雪花算法
