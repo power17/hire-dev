@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: user-service
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.237.128:8848
+        namespace: e4987f15-565a-4e93-b228-4bff03199e9b
+        group: dev
+        name: user-service.yaml
+        prefix: user-service
+        file-extension: yaml
+

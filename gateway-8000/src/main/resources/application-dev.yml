@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.237.128:8848
+        username: nacos
+        password: nacos
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 动态路由
+      routes:
+        - id: userRoute # 唯一
+          uri: lb://user-service # lb是负载浚航
+          predicates:
+            - Path=/u/**
+        - id: companyRoute
+          uri: lb://company-service
+          predicates:
+            - Path=/c/**

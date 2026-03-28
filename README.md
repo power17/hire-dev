@@ -27,6 +27,31 @@
 2. 构建项目: `mvn clean install`
 3. 启动各微服务
 
+## Maven常用命令
+
+```bash
+# 构建整个项目
+mvn clean install
+
+# 跳过测试构建
+mvn clean install -DskipTests
+
+# 构建单个模块（含依赖）
+mvn clean install -pl service-user-7001 -am
+
+# 启动服务
+mvn spring-boot:run
+
+# 打包
+mvn clean package
+
+# 查看依赖树
+mvn dependency:tree
+
+# 查看有效配置
+mvn help:effective-pom
+```
+
 ## 配置
 
 - 端口配置:
@@ -43,16 +68,7 @@ nacos地址：http://localhost:8848/nacos
 ```shell
 docker pull nacos/nacos-server:v2.1.0
 
-docker run --name nacos `
--e MODE=standalone `
--e JVM_XMS=128m `
--e JVM_XMX=128m `
--e JVM_XMN=64m `
--e JVM_MS=64m `
--e JVM_MMS=64m `
--p 8848:8848 `
--d nacos/nacos-server:v2.1.1
-
+docker run --name nacos -e MODE=standalone -e JVM_XMS=128m -e JVM_XMX=128m -e JVM_XMN=64m -e JVM_MS=64m -e JVM_MMS=64m -p 8848:8848 -d nacos/nacos-server:v2.1.1 
 
 docker update nacos --restart=always
 
