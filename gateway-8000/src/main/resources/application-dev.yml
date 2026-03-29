@@ -19,6 +19,6 @@ spring:
           predicates:
             - Path=/c/**
         - id: authRoute
-          uri: lb://company-service
+          uri: lb://auth-service
           predicates:
-            - Path=/a/**
+            - Path=/a/**,/passport/**

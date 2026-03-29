@@ -1,7 +1,6 @@
 package com.power.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.power.pojo.Users;
+import com.power.controller.pojo.Users;
 
 /**
  * <p>
