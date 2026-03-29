@@ -73,3 +73,22 @@ docker run --name nacos -e MODE=standalone -e JVM_XMS=128m -e JVM_XMX=128m -e JV
 docker update nacos --restart=always
 
 ```
+redis
+```shell
+docker pull redis:6.2.6
+
+mkdir -p /home/redis6/conf
+touch /home/redis6/conf/redis.conf
+
+
+docker run -p 6379:6379 --name redis \
+-v /home/redis6/data:/data \
+-v /home/redis6/conf/redis.conf:/etc/redis/redis.conf \
+-d redis:6.2.7 \
+redis-server /etc/redis/redis.conf
+
+docker update redis --restart=always
+
+
+```
+

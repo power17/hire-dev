@@ -56,6 +56,20 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <!-- go to https://central.sonatype.com/artifact/com.tencentcloudapi/tencentcloud-sdk-java/versions and get the latest version. -->
+            <!-- 请到 https://central.sonatype.com/artifact/com.tencentcloudapi/tencentcloud-sdk-java/versions 查询所有版本，最新版本如下 -->
+            <version>3.1.1000</version>
+        </dependency>
+
+        <!-- redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!-- mysql 驱动 -->
         <dependency>
             <groupId>mysql</groupId>
