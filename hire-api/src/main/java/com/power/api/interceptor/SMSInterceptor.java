@@ -1,6 +1,10 @@
 package com.power.api.interceptor;
 
-import com.power.controller.base.BaseInfoProperties;import com.power.controller.utils.IPUtil;import lombok.extern.slf4j.Slf4j;import org.checkerframework.checker.nullness.qual.Nullable;
+import com.power.base.BaseInfoProperties;
+import com.power.exceptions.GraceException;
+import com.power.exceptions.MyCustomException;
+import com.power.result.ResponseStatusEnum;
+import com.power.utils.IPUtil;import lombok.extern.slf4j.Slf4j;import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,8 +18,8 @@ public class SMSInterceptor extends BaseInfoProperties implements HandlerInterce
         String ip = IPUtil.getRequestIp(request);
         Boolean isExistIp = redis.keyIsExist(MOBILE_SMSCODE + ":" + ip);
         if (isExistIp) {
-            log.error("短信发送频率太高了~~~");
-            return false;
+           GraceException.dispaly(ResponseStatusEnum.SMS_NEED_WAIT_ERROR);
+           return false;
         }
         return true;
     }

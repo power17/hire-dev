@@ -2,7 +2,7 @@ package com.power.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.power.mapper.UsersMapper;
-import com.power.controller.pojo.Users;
+import com.power.pojo.Users;
 import com.power.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

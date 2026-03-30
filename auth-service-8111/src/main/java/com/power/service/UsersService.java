@@ -1,6 +1,6 @@
 package com.power.service;
 
-import com.power.controller.pojo.Users;
+import com.power.pojo.Users;
 
 /**
  * <p>

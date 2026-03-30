@@ -1,16 +1,17 @@
 package com.power.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.power.pojo.Users;
-
+import com.power.pojo.Stu;
 
 
 /**
  * <p>
- * 用户表
+ *  Mapper 接口
  * </p>
  *
  * @author power
  * @since 2026-03-21
  */
-public interface UsersMapper extends BaseMapper<Users> {}
+public interface StuMapper extends BaseMapper<Stu> {
+
+}
