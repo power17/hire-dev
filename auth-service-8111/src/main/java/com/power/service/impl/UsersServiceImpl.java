@@ -1,5 +1,6 @@
 package com.power.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.power.mapper.UsersMapper;
 import com.power.pojo.Users;
@@ -20,13 +21,22 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     @Autowired
     private UsersMapper usersMapper;
 
-
-
     @Override
     public boolean save(Users users) {
         usersMapper.insert(users);
         return false;
     }
 
+    @Override
+    public Users queryMobileIsExist(String mobile) {
 
+        return usersMapper.selectOne(new QueryWrapper<Users>()
+                .eq("mobile", mobile));
+
+    }
+
+    @Override
+    public boolean createUser(String mobile) {
+        return false;
+    }
 }

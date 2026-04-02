@@ -1,4 +1,4 @@
-package com.power;
+package com.power.controller;
 
 import com.power.mapper.UsersMapper;
 import lombok.extern.slf4j.Slf4j;

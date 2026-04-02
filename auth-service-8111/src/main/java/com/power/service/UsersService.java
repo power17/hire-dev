@@ -11,5 +11,6 @@ import com.power.pojo.Users;
  * @since 2026-03-21
  */
 public interface UsersService {
-    public boolean save(Users users);
+    public boolean createUser(String mobile);
+    public Users queryMobileIsExist (String mobile);
 }
