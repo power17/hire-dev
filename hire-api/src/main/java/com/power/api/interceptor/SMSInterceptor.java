@@ -18,7 +18,7 @@ public class SMSInterceptor extends BaseInfoProperties implements HandlerInterce
         String ip = IPUtil.getRequestIp(request);
         Boolean isExistIp = redis.keyIsExist(MOBILE_SMSCODE + ":" + ip);
         if (isExistIp) {
-           GraceException.dispaly(ResponseStatusEnum.SMS_NEED_WAIT_ERROR);
+           GraceException.display(ResponseStatusEnum.SMS_NEED_WAIT_ERROR);
            return false;
         }
         return true;

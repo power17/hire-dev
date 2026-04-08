@@ -1,5 +1,6 @@
 package com.power.controller;
 
+import com.google.gson.Gson;
 import com.power.base.BaseInfoProperties;
 import com.power.bo.RegisterBo;
 import com.power.pojo.Users;
@@ -7,9 +8,12 @@ import com.power.result.GraceJsonResult;
 import com.power.result.ResponseStatusEnum;
 import com.power.service.UsersService;
 import com.power.utils.IPUtil;
+import com.power.utils.JWTUtils;
 import com.power.utils.SMSUtils;
+import com.power.vo.UsersVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +28,9 @@ public class PassportController extends BaseInfoProperties {
     private SMSUtils smsUtils;
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private JWTUtils jwtUtils;
 
     @PostMapping("getSmsCode")
     public GraceJsonResult getSMSCode(String mobile, HttpServletRequest request)  {
@@ -54,13 +61,22 @@ public class PassportController extends BaseInfoProperties {
         Users user = usersService.queryMobileIsExist(mobile);
         if (user == null) {
             // 2.1 如果查询的用户为空，则表示没有注册过，则需要注册信息入库
-            usersService.createUser(mobile);
+             user = usersService.createUser(mobile);
         }
 
         // 4. 用户登录注册以后，删除redis中的短信验证码
         redis.del(MOBILE_SMSCODE + ":" + mobile);
 
-        return GraceJsonResult.ok();
+        // 创建jwt
+        String jwt = jwtUtils.createJWTWithPrefix(new Gson().toJson(user), TOKEN_USER_PREFIX);
+
+        // 构建vo
+        UsersVO usersVO = new UsersVO();
+        usersVO.setUserToken(jwt);
+        BeanUtils.copyProperties(user, usersVO);
+
+
+        return GraceJsonResult.ok(user);
     }
 
 }
