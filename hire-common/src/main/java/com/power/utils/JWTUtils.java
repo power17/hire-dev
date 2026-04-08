@@ -26,7 +26,7 @@ public class JWTUtils {
 //    private JWTProperties jwtProperties;
 
     @Value("${jwt.key}")
-    public String JWT_KEY;
+    private String JWT_KEY;
 
     public String createJWTWithPrefix(String body, Long expireTimes, String prefix) {
         if (expireTimes == null)
