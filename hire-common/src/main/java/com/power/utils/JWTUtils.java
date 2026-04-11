@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 import sun.misc.BASE64Encoder;
 
@@ -18,6 +19,7 @@ import java.util.Date;
 
 @Slf4j
 @Component
+@RefreshScope
 public class JWTUtils {
 
     public static final String at = "@";

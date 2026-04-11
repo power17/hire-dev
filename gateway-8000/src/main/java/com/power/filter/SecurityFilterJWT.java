@@ -99,7 +99,7 @@ public class SecurityFilterJWT extends BaseInfoProperties implements GlobalFilte
         try {
             String userJson = jwtUtils.checkJWT(jwt);
             ServerWebExchange serverWebExchange = setNewHeader(exchange, key, userJson);
-            return chain.filter(serverWebExchange);
+            return chain.filter(serverWebExchange); // 放行
         } catch (ExpiredJwtException e) {
             e.printStackTrace();
             return renderErrorMsg(exchange, ResponseStatusEnum.JWT_EXPIRE_ERROR);
