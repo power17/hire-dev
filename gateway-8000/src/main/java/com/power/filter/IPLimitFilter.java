@@ -45,9 +45,11 @@ public class IPLimitFilter extends BaseInfoProperties implements GlobalFilter, O
 
         if(ipLimitList != null && !ipLimitList.isEmpty()) {
             for(String ipLimit: ipLimitList) {
-                antPathMatcher.matchStart(ipLimit, url);
-                log.info("IPLimitFilter - 拦截到需要进行ip限流校验的方法：URL = " + url);
-                return doLimit(exchange, chain);
+                if (antPathMatcher.matchStart(ipLimit, url)) {
+                    // 如果匹配到，则表明需要进行ip的拦截校验
+                    log.info("IPLimitFilter - 拦截到需要进行ip限流校验的方法：URL = " + url);
+                    return doLimit(exchange, chain);
+                }
             }
         }
         return chain.filter(exchange);
