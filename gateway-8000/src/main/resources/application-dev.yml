@@ -18,7 +18,7 @@ spring:
         - id: userRoute # 唯一
           uri: lb://user-service # lb是负载浚航
           predicates:
-            - Path=/u/**
+            - Path=/u/**,/admininfo/**
         - id: companyRoute
           uri: lb://company-service
           predicates:
