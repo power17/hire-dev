@@ -3,11 +3,13 @@ package com.power.controller;
 import com.power.api.interceptor.JwtUserInterceptor;
 import com.power.base.BaseInfoProperties;
 import com.power.bo.CreateAdminBO;
+import com.power.bo.ResetPwdBO;
 import com.power.bo.UpdateAdminBO;
 import com.power.pojo.Admin;
 import com.power.result.GraceJsonResult;
 import com.power.service.AdminService;
 import com.power.utils.PagedGridResult;
+import com.power.vo.AdminInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,26 +64,23 @@ public class AdminInfoController extends BaseInfoProperties {
         return GraceJsonResult.ok();
     }
 
-//    @PostMapping("resetPwd")
-//    public GraceJsonResult resetPwd(@RequestBody ResetPwdBO resetPwdBO) {
+    @PostMapping("resetPwd")
+    public GraceJsonResult resetPwd(@RequestBody ResetPwdBO resetPwdBO) {
+
+        resetPwdBO.modifyPwd();
+        return GraceJsonResult.ok();
+    }
 //
-//        // resetPwdBO 校验
-//        // adminService 重置密码
-//
-//        resetPwdBO.modifyPwd();
-//        return GraceJsonResult.ok();
-//    }
-//
-//    @PostMapping("myInfo")
-//    public GraceJsonResult myInfo() {
-//
-//        Admin admin = JwtUserInterceptor.adminUser.get();
-//
-//        Admin adminInfo = adminService.getById(admin.getId());
-//
-//        AdminInfoVO adminInfoVO = new AdminInfoVO();
-//        BeanUtils.copyProperties(adminInfo, adminInfoVO);
-//
-//        return GraceJsonResult.ok(adminInfoVO);
-//    }
+    @PostMapping("myInfo")
+    public GraceJsonResult myInfo() {
+
+        Admin admin = JwtUserInterceptor.adminUser.get();
+
+        Admin adminInfo = adminService.getById(admin.getId());
+
+        AdminInfoVO adminInfoVO = new AdminInfoVO();
+        BeanUtils.copyProperties(adminInfo, adminInfoVO);
+
+        return GraceJsonResult.ok(adminInfoVO);
+    }
 }
