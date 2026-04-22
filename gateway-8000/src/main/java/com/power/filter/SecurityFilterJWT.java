@@ -55,7 +55,7 @@ public class SecurityFilterJWT extends BaseInfoProperties implements GlobalFilte
                 }
             }
         }
-        log.info(url +  ":被拦截了。。。");
+//        log.info(url +  ":被拦截了。。。");
         // 判断header中是否有token，对用户请求进行判断拦截
         HttpHeaders headers = exchange.getRequest().getHeaders();
         String userToken = headers.getFirst(HEADER_USER_TOKEN);
