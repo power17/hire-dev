@@ -84,6 +84,7 @@ public enum ResponseStatusEnum {
     FACE_VERIFY_TYPE_ERROR(600, false, "人脸比对验证类型不正确！"),
     FACE_VERIFY_LOGIN_ERROR(601, false, "人脸登录失败！"),
 
+
     // 系统错误，未预期的错误 555
     SYSTEM_ERROR(555, false, "系统繁忙，请稍后再试！"),
     SYSTEM_OPERATION_ERROR(556, false, "操作失败，请重试或联系管理员"),
@@ -94,6 +95,9 @@ public enum ResponseStatusEnum {
     SYSTEM_PARAMS_SETTINGS_ERROR(5611, false, "参数设置不规范！"),
     ZOOKEEPER_BAD_VERSION_ERROR(5612, false, "数据过时，请刷新页面重试！"),
     SYSTEM_ERROR_BLACK_IP(5621, false, "请求过于频繁，请稍后重试！"),
+    SYSTEM_SMS_FALLBACK_ERROR(5587, false, "短信业务繁忙，请稍后再试！"),
+    SYS_DATA_ERROR(5588, false, "系统参数为空，请检查系统参数表sys_params！"),
+    SYSTEM_ERROR_NOT_BLANK(5599, false, "系统错误，参数不能为空！"),
 
     DATA_DICT_EXIST_ERROR(5631, false, "数据字典已存在，不可重复添加或修改！"),
     DATA_DICT_DELETE_ERROR(5632, false, "删除数据字典失败！"),
@@ -105,18 +109,17 @@ public enum ResponseStatusEnum {
     JWT_SIGNATURE_ERROR(5555, false, "用户校验失败，请重新登录！"),
     JWT_EXPIRE_ERROR(5556, false, "登录有效期已过，请重新登录！"),
 
+    SENTINEL_BLOCK_FLOW_LIMIT_ERROR(5801, false, "系统访问繁忙，请稍后再试！"),
+
     // 支付错误相关代码
     PAYMENT_USER_INFO_ERROR(5901, false, "用户id或密码不正确！"),
     PAYMENT_ACCOUT_EXPIRE_ERROR(5902, false, "该账户授权访问日期已失效！"),
     PAYMENT_HEADERS_ERROR(5903, false, "请在header中携带支付中心所需的用户id以及密码！"),
     PAYMENT_ORDER_CREATE_ERROR(5904, false, "支付中心订单创建失败，请联系管理员！"),
 
-
-
     // admin 相关错误代码
     ADMIN_NOT_EXIST(5101, false, "管理员不存在！");
 
-    // 响应业务状态
     private Integer status;
     // 调用是否成功
     private Boolean success;

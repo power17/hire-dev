@@ -1,6 +1,7 @@
 package com.power.controller;
 
 import com.google.gson.Gson;
+import com.power.api.task.SMSTask;
 import com.power.base.BaseInfoProperties;
 import com.power.bo.RegisterBo;
 import com.power.pojo.Users;
@@ -32,6 +33,9 @@ public class PassportController extends BaseInfoProperties {
     @Autowired
     private JWTUtils jwtUtils;
 
+    @Autowired
+    private SMSTask smsTask;
+
     @PostMapping("getSmsCode")
     public GraceJsonResult getSMSCode(String mobile, HttpServletRequest request)  {
 //        if (StringUtils.isBlank(mobile)) {
@@ -44,6 +48,7 @@ public class PassportController extends BaseInfoProperties {
         String code = (int) ((Math.random() * 9  + 1)  * 100000) + "";
 //        发送短信
 //        smsUtils.sendSMS(mobile, code);
+        smsTask.sendTask();
         redis.set(MOBILE_SMSCODE + ":" + mobile, code,  30 * 60);
         log.info("验证码为: {}", code);
         return  GraceJsonResult.ok();

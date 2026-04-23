@@ -64,6 +64,7 @@ mvn help:effective-pom
   - 职位服务: 3001
 
 ## docker命令
+192.168.237.128:nacos
 nacos地址：http://localhost:8848/nacos
 ```shell
 docker pull nacos/nacos-server:v2.1.0
@@ -89,6 +90,22 @@ redis-server /etc/redis/redis.conf
 
 docker update redis --restart=always
 
+
+```
+192.168.237.129: rabbitmq
+账号：guest
+密码：guest
+```shell
+sudo docker run -d \
+  --name rabbitmq \
+  -p 5671:5671 \
+  -p 5672:5672 \
+  -p 4369:4369 \
+  -p 15671:15671 \
+  -p 15672:15672 \
+  -p 25672:25672 \
+  --restart always \
+  -d rabbitmq:management
 
 ```
 
