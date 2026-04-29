@@ -1,25 +1,33 @@
 package com.power.controller;
 
 import com.google.gson.Gson;
+import com.power.api.mq.RabbitMQSMSConfig;
 import com.power.api.task.SMSTask;
 import com.power.base.BaseInfoProperties;
 import com.power.bo.RegisterBo;
 import com.power.pojo.Users;
+import com.power.pojo.mq.SMSConfigQO;
 import com.power.result.GraceJsonResult;
 import com.power.result.ResponseStatusEnum;
 import com.power.service.UsersService;
+import com.power.utils.GsonUtils;
 import com.power.utils.IPUtil;
 import com.power.utils.JWTUtils;
 import com.power.utils.SMSUtils;
 import com.power.vo.UsersVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.springframework.amqp.core.ReturnedMessage;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("passport")
@@ -29,6 +37,8 @@ public class PassportController extends BaseInfoProperties {
     private SMSUtils smsUtils;
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Autowired
     private JWTUtils jwtUtils;
@@ -48,7 +58,34 @@ public class PassportController extends BaseInfoProperties {
         String code = (int) ((Math.random() * 9  + 1)  * 100000) + "";
 //        发送短信
 //        smsUtils.sendSMS(mobile, code);
-        smsTask.sendTask();
+//        异步任务
+//        smsTask.sendTask();
+//        使用rabbitmq发送短信
+        SMSConfigQO smsConfigQO = new SMSConfigQO();
+        smsConfigQO.setMobile(mobile);
+        smsConfigQO.setContent(code);
+
+        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+            @Override
+            public void confirm(@Nullable CorrelationData correlationData, boolean ack, @Nullable String s) {
+                log.info("confirmId:" + correlationData.getId());
+                if(ack) {
+                    log.info("confirm success");
+                }
+            }
+        });
+        // exchange 进入queque时失败的回调
+        rabbitTemplate.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
+            @Override
+            public void returnedMessage(ReturnedMessage returnedMessage) {
+                log.info(returnedMessage.toString());
+            }
+        });
+        rabbitTemplate.convertAndSend(RabbitMQSMSConfig.SMS_EXCHANGE,
+                "power.sms.send.login",
+                GsonUtils.object2String(smsConfigQO),
+                new CorrelationData(UUID.randomUUID().toString()));
+
         redis.set(MOBILE_SMSCODE + ":" + mobile, code,  30 * 60);
         log.info("验证码为: {}", code);
         return  GraceJsonResult.ok();

@@ -2,6 +2,7 @@ package com.power.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.power.api.feign.WorkMicroServiceFeign;
 import com.power.enums.Sex;
 import com.power.enums.ShowWhichName;
 import com.power.enums.UserRole;
@@ -29,6 +30,9 @@ import java.time.LocalDateTime;
 public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements UsersService {
     @Autowired
     private UsersMapper usersMapper;
+    @Autowired
+    private WorkMicroServiceFeign workMicroServiceFeign;
+
     private static final String USER_FACE1 = "http://122.152.205.72:88/group1/M00/00/05/CpoxxF6ZUySASMbOAABBAXhjY0Y649.png";
     @Override
     public boolean save(Users users) {
@@ -76,6 +80,8 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         user.setCreatedTime(LocalDateTime.now());
         user.setUpdatedTime(LocalDateTime.now());
 
+        //创建简历
+        workMicroServiceFeign.init(user.getId());
         usersMapper.insert(user);
 
         return user;

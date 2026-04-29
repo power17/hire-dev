@@ -1,3 +1,8 @@
+server:
+  port: ${port:4001}
+  tomcat:
+    uri-encoding: UTF-8
+    max-swallow-size: -1    # tomcat默认大小2M，超过2M的文件不会被捕获，需要调整此处大小为100MB或者-1即可
 spring:
   datasource:                                     # 数据源的相关配置
     type: com.zaxxer.hikari.HikariDataSource      # 数据源的类型，可以更改为其他的数据源配置，比如druid
@@ -20,16 +25,16 @@ spring:
         server-addr: 192.168.237.128:8848
         username: nacos
         password: nacos
-  redis:
-    host: 192.168.237.128
-    port: 6379
-    database: 0
-    password: 123456
   rabbitmq:
     host: 192.168.237.129
     port: 5672
     virtual-host: /
     username: power
     password: power
-    publisher-confirm-type: correlated
-    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+#        prefetch: 2
+logging:
+  level:
+    root: info
