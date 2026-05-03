@@ -92,6 +92,12 @@ docker update redis --restart=always
 
 
 ```
+seata
+```shell
+docker pull seataio/seata-server:1.5.2
+docker run --name seata-server -p 8091:8091 -p 7091:7091 -v /home/seata-server/resources:/seata-server/resources -d  seataio/seata-server:1.5.2 
+```
+
 192.168.237.129: rabbitmq
 账号：guest
 密码：guest

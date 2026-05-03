@@ -11,6 +11,7 @@ import com.power.pojo.Users;
 import com.power.service.UsersService;
 import com.power.utils.DesensitizationUtil;
 import com.power.utils.LocalDateUtils;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +48,8 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
                 .eq("mobile", mobile));
 
     }
-    @Transactional
+//    @Transactional
+    @GlobalTransactional
     @Override
     public Users createUser(String mobile) {
         Users user = new Users();
@@ -80,9 +82,9 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         user.setCreatedTime(LocalDateTime.now());
         user.setUpdatedTime(LocalDateTime.now());
 
-        //创建简历
-        workMicroServiceFeign.init(user.getId());
         usersMapper.insert(user);
+        //远程调用，创建简历
+        workMicroServiceFeign.init(user.getId());
 
         return user;
 

@@ -18,7 +18,7 @@ spring:
         - id: userRoute # 唯一
           uri: lb://user-service # lb是负载浚航
           predicates:
-            - Path=/u/**,/admininfo/**
+            - Path=/u/**,/admininfo/**,/userinfo/**
         - id: companyRoute
           uri: lb://company-service
           predicates:
@@ -35,3 +35,6 @@ spring:
           uri: lb://work-service
           predicates:
             - Path=/w/**,/resume/**
+    loadbalancer:
+      nacos:
+        enabled: true

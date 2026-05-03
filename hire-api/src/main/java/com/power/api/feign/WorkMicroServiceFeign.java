@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("work-service")
 public interface WorkMicroServiceFeign {
     @PostMapping("/resume/init")
-    public GraceJsonResult init(@RequestParam String userId);
+    public GraceJsonResult init(@RequestParam("userId") String userId);
 }

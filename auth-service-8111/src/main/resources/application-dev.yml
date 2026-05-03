@@ -33,3 +33,22 @@ spring:
     password: power
     publisher-confirm-type: correlated
     publisher-returns: true
+seata:
+  enabled: true
+  tx-service-group: power_tx_group
+  service:
+    vgroup-mapping:
+      power_tx_group: SEATA_GROUP
+      default_tx_group: SEATA_GROUP
+    grouplist:
+      SEATA_GROUP: 192.168.237.128:8091
+  config:
+    nacos:
+      server-addr: 192.168.237.128:8848
+      username: nacos
+      password: nacos
+    registry:
+      nacos:
+        server-addr: 192.168.237.128:8848
+        username: nacos
+        password: nacos

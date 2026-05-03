@@ -19,12 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 public class HelloController extends BaseInfoProperties {
 
 
+
     @Value("${server.port}")
     private String port;
 
-
     @GetMapping("hello")
     public Object hello(HttpServletRequest request) {
+        return JsonResult.ok();
+    }
+    @GetMapping("port")
+    public Object port(HttpServletRequest request) {
+        log.info("port: {}", port);
         return JsonResult.ok();
     }
 }
