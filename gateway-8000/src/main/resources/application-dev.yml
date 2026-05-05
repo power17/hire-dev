@@ -35,6 +35,10 @@ spring:
           uri: lb://work-service
           predicates:
             - Path=/w/**,/resume/**
+        - id: fileRoute
+          uri: lb://file-service
+          predicates:
+            - Path=/file/**,/static/**
     loadbalancer:
       nacos:
         enabled: true
