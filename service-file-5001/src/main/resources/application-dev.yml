@@ -5,3 +5,10 @@ spring:
         server-addr: 192.168.237.128:8848
         username: nacos
         password: nacos
+# MinIO 配置
+minio:
+  endpoint: http://192.168.237.128:9000      # MinIO服务地址
+  fileHost: http://192.168.237.128:9000      # 文件地址host
+  bucketName: hire                        # 存储桶bucket名称
+  accessKey: imooc                         # 用户名
+  secretKey: imooc123456                   # 密码

@@ -1,7 +1,12 @@
 package com.power.controller;
 
+import com.power.MinIOConfig;
+import com.power.MinIOUtils;
 import com.power.result.GraceJsonResult;
+import com.power.result.ResponseStatusEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +22,7 @@ import java.nio.file.Paths;
 @Slf4j
 public class FileController {
     public static final String host = "http://localhost:8000/";
-    @PostMapping("uploadFace")
+    @PostMapping("uploadFace1")
     public GraceJsonResult uploadFace1(@RequestParam("file") MultipartFile file,
                                        @RequestParam("userId") String userId,
                                        HttpServletRequest request) throws Exception {
@@ -51,5 +56,33 @@ public class FileController {
         String userFaceUrl = host + "static/face/" + newFileName;
 
         return GraceJsonResult.ok(userFaceUrl);
+    }
+
+    @Autowired
+    private MinIOConfig minIOConfig;
+
+    @PostMapping("uploadFace")
+    public GraceJsonResult uploadFace(@RequestParam("file") MultipartFile file,
+                                      @RequestParam("userId") String userId) throws Exception {
+
+        if (StringUtils.isBlank(userId)) {
+            return GraceJsonResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_FAILD);
+        }
+
+        // 获得文件原始名称
+        String filename = file.getOriginalFilename();
+        if (StringUtils.isBlank(filename)) {
+            return GraceJsonResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_NULL_ERROR);
+        }
+
+        filename = userId + "-" + filename;
+        MinIOUtils.uploadFile(minIOConfig.getBucketName(), filename, file.getInputStream());
+
+        String imageUrl = minIOConfig.getFileHost()
+                + "/"
+                + minIOConfig.getBucketName()
+                + "/"
+                + filename;
+        return GraceJsonResult.ok(imageUrl);
     }
 }
