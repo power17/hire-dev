@@ -2,20 +2,21 @@ package com.power.controller;
 
 import com.power.MinIOConfig;
 import com.power.MinIOUtils;
+import com.power.bo.Base64FileBO;
 import com.power.result.GraceJsonResult;
 import com.power.result.ResponseStatusEnum;
+import com.power.utils.Base64ToFile;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("file")
@@ -83,6 +84,35 @@ public class FileController {
                 + minIOConfig.getBucketName()
                 + "/"
                 + filename;
+        return GraceJsonResult.ok(imageUrl);
+    }
+
+    @PostMapping("uploadAdminFace")
+    public GraceJsonResult uploadAdminFace(@RequestBody @Valid Base64FileBO base64FileBO) throws Exception {
+
+        String base64 = base64FileBO.getBase64File();
+
+        String suffixName = ".png"; // 后缀
+        String uuid = UUID.randomUUID().toString(); // 文件名
+        String objectName = uuid + suffixName;  // 对象名
+
+        String rootPath = "/temp" + File.separator;
+        String filePath = rootPath
+                + File.separator
+                + "adminFace"
+                + File.separator
+                + objectName;
+
+        Base64ToFile.Base64ToFile(base64, filePath);
+
+        MinIOUtils.uploadFile(minIOConfig.getBucketName(), objectName, filePath);
+
+        String imageUrl = minIOConfig.getFileHost()
+                + "/"
+                + minIOConfig.getBucketName()
+                + "/"
+                + objectName;
+
         return GraceJsonResult.ok(imageUrl);
     }
 }

@@ -1,17 +1,18 @@
 package com.power.bo;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-@NoArgsConstructor
+@ToString
 @AllArgsConstructor
-public class UpdateAdminBO {
-    private String id;
-    private String username;
-    private String face;
-    private String remark;
+@NoArgsConstructor
+public class Base64FileBO {
+    @NotBlank
+    private String base64File;
 }

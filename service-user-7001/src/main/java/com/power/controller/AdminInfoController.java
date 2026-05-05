@@ -83,4 +83,5 @@ public class AdminInfoController extends BaseInfoProperties {
 
         return GraceJsonResult.ok(adminInfoVO);
     }
+
 }
