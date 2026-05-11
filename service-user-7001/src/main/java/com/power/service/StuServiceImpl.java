@@ -1,4 +1,4 @@
-package com.power.service.impl;
+package com.power.service;
 
 
 import com.power.mapper.StuMapper;

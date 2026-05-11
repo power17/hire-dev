@@ -115,4 +115,15 @@ public class FileController {
 
         return GraceJsonResult.ok(imageUrl);
     }
+    @PostMapping("uploadLogo")
+    public GraceJsonResult uploadLogo(@RequestParam("file") MultipartFile file) throws Exception {
+
+        String filename = file.getOriginalFilename();
+        filename = "company/logo/" + filename;
+        if (StringUtils.isBlank(filename)) {
+            return GraceJsonResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_NULL_ERROR);
+        }
+        String imageUrl = MinIOUtils.uploadFile(minIOConfig.getBucketName(), filename, file.getInputStream(), true);
+        return GraceJsonResult.ok(imageUrl);
+    }
 }
